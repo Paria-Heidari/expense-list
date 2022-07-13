@@ -33,11 +33,7 @@ function App() {
   return (
     <div className="App">
       <ExpenseNew onAddExpense={saveExpenseData}/>
-     {
-       expenses.map(pro => 
-        <Expense date={pro.date} title={pro.title} amount={pro.amount}/>
-        )
-     }
+      <Expense items={expenses}/>
     </div>
   );
 }
