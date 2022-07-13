@@ -25,9 +25,14 @@ function App() {
     },
   ];
 
+  const saveExpenseData = (expense) => {
+  console.log("🚀 ~ file: App.js ~ line 29 ~ saveExpenseData ~ expense", expense)
+    
+  }
+
   return (
     <div className="App">
-      <ExpenseNew/>
+      <ExpenseNew onAddExpense={saveExpenseData}/>
      {
        expenses.map(pro => 
         <Expense date={pro.date} title={pro.title} amount={pro.amount}/>
