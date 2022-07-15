@@ -6,6 +6,8 @@ const ExpenseForm = (props) => {
     const [updatedTitle, setUpdateTitle] = useState('');
     const [updatedAmount, setUpdatedAmount] = useState('');
     const [updatedDate, setUpdatedDate] = useState ('');
+    const [showForm, setShowForm] = useState(true);
+
 
 // Using oneState
     // const [formData, setFormData] = useState({
@@ -52,7 +54,7 @@ const ExpenseForm = (props) => {
         event.preventDefault();
         const expenseData ={
             title: updatedTitle,
-            amount: updatedAmount,
+            amount: +updatedAmount,
             date: new Date(updatedDate)
         };
         props.onSaveExpenseData(expenseData);
@@ -61,28 +63,38 @@ const ExpenseForm = (props) => {
         setUpdatedDate('');
         
     }
+    const cancelAddExpense = () =>{
+        setShowForm(false);
+    }
 
 
   return (
-    <form onSubmit={submitHandler}>
-        <div className='new-expense__controls'>
-            <div className='new-expense__control'>
-                <label> Title </label>
-                <input type='text' value={updatedTitle} onChange={updateTitle}/>
+      <>
+        { showForm && <form onSubmit={submitHandler}>
+            <div className='new-expense__controls'>
+                <div className='new-expense__control'>
+                    <label> Title </label>
+                    <input type='text' value={updatedTitle} onChange={updateTitle}/>
+                </div>
+                <div className='new-expense__control'>
+                    <label> Amount</label>
+                    <input type='number' min='0.01' step='0.01' value={updatedAmount} onChange={updateAmount}/>
+                </div>
+                <div className='new-expense__control'>
+                    <label> Date</label>
+                    <input type='date' min='2019-01-01' max='2022-12-31' value={updatedDate} onChange={updateDate}/>
+                </div>
             </div>
-            <div className='new-expense__control'>
-                <label> Amount</label>
-                <input type='number' min='0.01' step='0.01' value={updatedAmount} onChange={updateAmount}/>
+            <div className='new-expense--action'>
+                <button type='submit' onClick={cancelAddExpense}>Cancel</button>
+                <button type='submit'>Add Expense</button>
+                { !showForm && <button type='submit'>Add new Expense</button>}
             </div>
-            <div className='new-expense__control'>
-                <label> Date</label>
-                <input type='date' min='2019-01-01' max='2022-12-31' value={updatedDate} onChange={updateDate}/>
-            </div>
-        </div>
+        </form>}
         <div className='new-expense--action'>
-            <button type='submit'>Add Expense</button>
+            { !showForm && <button type='submit'>Add new Expense</button>}
         </div>
-    </form>
+      </>
   )
 }
 
